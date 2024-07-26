@@ -27,7 +27,4 @@ jobs:
         ls -al ~/.ssh
     - name: Connect to GCP VM and Run Command
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/key $GCP_USERNAME@$GCP_VM_EXTERNAL_IP << EOF
-          echo "Connected to GCP VM"
-          pwd
-        EOF
+        ssh -i ~/.ssh/key $GCP_USERNAME@$GCP_VM_EXTERNAL_IP
