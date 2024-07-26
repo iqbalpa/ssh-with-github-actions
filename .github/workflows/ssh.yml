@@ -1,0 +1,27 @@
+name: SSH to GCP VM via GitHub Actions 
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  access-vm:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    - name: Setup SSH
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
+        GCP_VM_EXTERNAL_IP: ${{ secrets.GCP_VM_EXTERNAL_IP }}
+        GCP_USERNAME: ${{ secrets.GCP_USERNAME }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+    - name: Connect to GCP VM and Run Command
+      run: |
+        ssh -o StrictHostKeyChecking=no $GCP_USERNAME@$GCP_VM_EXTERNAL_IP << EOF
+          echo "Connected to GCP VM"
+          pwd
+        EOF
