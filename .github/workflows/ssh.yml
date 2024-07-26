@@ -23,9 +23,8 @@ jobs:
     - name: Echo SSH 
       run: |
         pwd
+        ls -al
         ls -al ~/.ssh
-        cat ~/.ssh/key
-        cat ~/.ssh/known_hosts
     - name: Connect to GCP VM and Run Command
       run: |
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/key $GCP_USERNAME@$GCP_VM_EXTERNAL_IP << EOF
