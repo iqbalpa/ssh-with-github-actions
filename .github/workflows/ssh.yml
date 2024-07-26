@@ -21,7 +21,7 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
     - name: Connect to GCP VM and Run Command
       run: |
-        ssh -o StrictHostKeyChecking=no $GCP_USERNAME@$GCP_VM_EXTERNAL_IP << EOF
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $GCP_USERNAME@$GCP_VM_EXTERNAL_IP << EOF
           echo "Connected to GCP VM"
           pwd
         EOF
