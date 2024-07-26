@@ -17,12 +17,15 @@ jobs:
         GCP_USERNAME: ${{ secrets.GCP_USERNAME }}
       run: |
         mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/key
+        sudo chmod 600 ~/.ssh/key
+        ssh-keyscan -H "$GCP_VM_EXTERNAL_IP" > ~/.ssh/known_hosts
+    - name: Echo SSH 
+      run: |
+        ls -al ~/.ssh
     - name: Connect to GCP VM and Run Command
       run: |
-        set -x
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $GCP_USERNAME@$GCP_VM_EXTERNAL_IP << EOF
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/key $GCP_USERNAME@$GCP_VM_EXTERNAL_IP << EOF
           echo "Connected to GCP VM"
           pwd
         EOF
