@@ -25,6 +25,8 @@ jobs:
         pwd
         ls -al
         ls -al ~/.ssh
+    - name: SSH Command Test
+      run: ssh
     - name: Connect to GCP VM and Run Command
       run: |
         ssh -i ~/.ssh/key $GCP_USERNAME@$GCP_VM_EXTERNAL_IP
